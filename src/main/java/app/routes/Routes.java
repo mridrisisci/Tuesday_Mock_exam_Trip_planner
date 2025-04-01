@@ -31,12 +31,12 @@ public class Routes
         return () -> {
             path("auth", authRoutes());
             path("protected", protectedRoutes());
-            path("guide", guideRoutes());
+            path("trips", tripRoutes());
             logger.info("Routes initialized ( getRoutes() )");
         };
     }
 
-    private  EndpointGroup guideRoutes()
+    private  EndpointGroup tripRoutes()
     {
         return () -> {
             get("/all", tripController::getAll);
@@ -45,7 +45,7 @@ public class Routes
             put("/{id}", tripController::update);
             delete("/{id}", tripController::delete);
             post("/populate", ctx -> tripController.populateDB(emf));
-            logger.info("inside guideRoutes() method");
+            logger.info("inside tripRoutes() method");
         };
     }
 

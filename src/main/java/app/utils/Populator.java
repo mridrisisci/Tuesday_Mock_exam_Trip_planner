@@ -7,23 +7,21 @@ import jakarta.persistence.EntityManager;
 import lombok.Getter;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Getter
 public class Populator
 {
 
-    private final Guide guide1 = new Guide();
-    private final Guide guide2 = new Guide();
-    private final Trip trip1 = new Trip();
-    private final Trip trip2 = new Trip();
-    private final Trip trip3 = new Trip();
-    private final Trip trip4 = new Trip();
-    private final Trip trip5 = new Trip();
-    private final Trip trip6 = new Trip();
+    private  Guide guide1 = new Guide();
+    private  Guide guide2 = new Guide();
+    private  Trip trip1 = new Trip();
+    private  Trip trip2 = new Trip();
+    private  Trip trip3 = new Trip();
+    private  Trip trip4 = new Trip();
+    private  Trip trip5 = new Trip();
+    private  Trip trip6 = new Trip();
 
     public Populator()
     {
@@ -44,8 +42,6 @@ public class Populator
             .price(100)
             .category(TripType.CITY)
             .build();
-        trip1.setGuide(guide1);
-        guide1.addTrip(trip1);
 
         // Trip 2
         Trip trip2 = Trip.builder()
@@ -57,8 +53,6 @@ public class Populator
             .price(120)
             .category(TripType.BEACH)
             .build();
-        trip2.setGuide(guide1);
-        guide1.addTrip(trip2);
 
         // Trip 3
         Trip trip3 = Trip.builder()
@@ -70,8 +64,6 @@ public class Populator
             .price(150)
             .category(TripType.SNOW)
             .build();
-        trip3.setGuide(guide1);
-        guide1.addTrip(trip3);
 
 
         // Dummy guide 2
@@ -91,8 +83,6 @@ public class Populator
             .price(130)
             .category(TripType.CITY)
             .build();
-        trip4.setGuide(guide2);
-        guide2.addTrip(trip4);
 
         // Trip 5
         Trip trip5 = Trip.builder()
@@ -104,8 +94,6 @@ public class Populator
             .price(110)
             .category(TripType.BEACH)
             .build();
-        trip5.setGuide(guide2);
-        guide2.addTrip(trip5);
 
         // Trip 6
         Trip trip6 = Trip.builder()
@@ -117,13 +105,11 @@ public class Populator
             .price(140)
             .category(TripType.FOREST)
             .build();
-        trip6.setGuide(guide2);
-        guide2.addTrip(trip6);
     }
 
-    public Map<String, Object> getTrips()
+    public Map<String, Trip> getTrips()
     {
-        Map<String, Object> trips = new HashMap<>();
+        Map<String, Trip> trips = new HashMap<>();
         trips.put("trip1", trip1);
         trips.put("trip2", trip2);
         trips.put("trip3", trip3);
@@ -133,9 +119,9 @@ public class Populator
         return trips;
     }
 
-    public Map<String, Object> getGuides()
+    public Map<String, Guide> getGuides()
     {
-        Map<String, Object> guides = new HashMap<>();
+        Map<String, Guide> guides = new HashMap<>();
         guides.put("guide1", guide1);
         guides.put("guide2", guide2);
         return guides;
@@ -161,14 +147,22 @@ public class Populator
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Trip").executeUpdate();
         em.createQuery("DELETE FROM Guide").executeUpdate();
-        for (Object entity : getGuides().values())
+        for (Guide entity : getGuides().values())
         {
             em.persist(entity);
         }
-        for (Object entity : getTrips().values())
+        guide1.addTrip(trip1);
+        guide1.addTrip(trip2);
+        guide1.addTrip(trip3);
+        guide2.addTrip(trip4);
+        guide2.addTrip(trip5);
+        guide2.addTrip(trip6);
+        for (Trip entity : getTrips().values())
         {
             em.persist(entity);
         }
+        guide1 = em.merge(guide1);
+        guide2 = em.merge(guide2);
         em.getTransaction().commit();
     }
 }

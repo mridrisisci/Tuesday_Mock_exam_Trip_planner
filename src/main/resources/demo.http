@@ -1,40 +1,9 @@
 
 
 // POPULATE DB
-POST localhost:7070/api/populate
+###
+POST localhost:7070/api/trips/populate
+
 
 ###
-GET localhost:7070/api/guide
-
-###
-GET localhost:7070/api/guide/2
-
-###
-POST localhost:7070/api/guide
-Content-Type: "application/json"
-
-{
-    "name": "Captain America",
-    "address": "Brønshøj Torv",
-    "trips":[
-        {
-            "roomNumber": 101,
-            "price": 1000
-        }
-    ]
-}
-
-###
-PUT localhost:7070/api/guide/1
-Content-Type: "application/json"
-
-{
-    "name": "Lucky Star Hotel",
-    "address": "Brorsonsvej 1"
-}
-
-###
-DELETE localhost:7070/api/guide/1
-
-###
-GET localhost:7070/api/guide/1/trips
+GET localhost:7070/api/trips/all
