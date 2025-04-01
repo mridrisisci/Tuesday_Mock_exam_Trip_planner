@@ -63,7 +63,7 @@ public class SecurityDAO extends GenericDAO implements ISecurityDAO
         foundUser.addRole(role);
         try
         {
-            foundUser = super.upappe(foundUser);
+            foundUser = super.update(foundUser);
             logger.info("Role added to user (username {}, role {})", username, role);
             return foundUser;
         }
@@ -81,7 +81,7 @@ public class SecurityDAO extends GenericDAO implements ISecurityDAO
         foundUserAccount.removeRole(role);
         try
         {
-            foundUserAccount = super.upappe(foundUserAccount);
+            foundUserAccount = super.update(foundUserAccount);
             logger.info("Role removed from user (username {}, role {})", username, role);
             return foundUserAccount;
         }

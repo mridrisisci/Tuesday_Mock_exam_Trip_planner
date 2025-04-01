@@ -32,7 +32,6 @@ public class Routes
             path("auth", authRoutes());
             path("protected", protectedRoutes());
             path("trips", tripRoutes());
-            logger.info("Routes initialized ( getRoutes() )");
         };
     }
 
@@ -45,7 +44,6 @@ public class Routes
             put("/{id}", tripController::update);
             delete("/{id}", tripController::delete);
             post("/populate", ctx -> tripController.populateDB(emf));
-            logger.info("inside tripRoutes() method");
         };
     }
 

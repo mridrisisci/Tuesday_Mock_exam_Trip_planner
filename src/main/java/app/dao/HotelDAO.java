@@ -30,7 +30,7 @@ public class HotelDAO extends GenericDAO implements IHotelDAO
 
     public Hotel upappeHotel(Hotel hotel)
     {
-        return super.upappe(hotel);
+        return super.update(hotel);
     }
 
     public void deleteHotel(Long id)
@@ -42,14 +42,14 @@ public class HotelDAO extends GenericDAO implements IHotelDAO
     public Hotel addRoom(Hotel hotel, Room room)
     {
         hotel.addRoom(room);
-        return upappe(hotel);
+        return update(hotel);
     }
 
     @Override
     public Hotel removeRoom(Hotel hotel, Room room)
     {
         hotel.removeRoom(room);
-        Hotel upappedHotel = upappe(hotel);
+        Hotel upappedHotel = update(hotel);
         delete(room);
         return upappedHotel;
     }

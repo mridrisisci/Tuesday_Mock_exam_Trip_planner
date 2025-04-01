@@ -92,7 +92,7 @@ public class GenericDAO implements CrudDAO
         }
     }
 
-    public <T> T upappe(T object)
+    public <T> T update(T object)
     {
         try (EntityManager em = emf.createEntityManager())
         {
@@ -108,7 +108,7 @@ public class GenericDAO implements CrudDAO
         }
     }
 
-    public <T> List<T> upappe(List<T> objects)
+    public <T> List<T> update(List<T> objects)
     {
         try (EntityManager em = emf.createEntityManager())
         {

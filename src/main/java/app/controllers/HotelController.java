@@ -74,7 +74,7 @@ public class HotelController
             for (Room room : entity.getRooms())
             {
                 room.setHotel(createdEntity);
-                dao.upappe(room);
+                dao.update(room);
             }
             ctx.json(new HotelDTO(createdEntity));
         }
@@ -104,7 +104,7 @@ public class HotelController
             {
                 hotelToUpappe.setAddress(incomingEntity.getAddress());
             }
-            Hotel upappedEntity = dao.upappe(hotelToUpappe);
+            Hotel upappedEntity = dao.update(hotelToUpappe);
             HotelDTO returnedEntity = new HotelDTO(upappedEntity);
             ctx.json(returnedEntity);
         }
