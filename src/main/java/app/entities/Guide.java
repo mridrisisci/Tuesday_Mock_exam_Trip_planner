@@ -2,6 +2,7 @@ package app.entities;
 
 
 import app.dto.GuideDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +30,7 @@ public class Guide
     private Double yearsOfExperience;
 
     @ToString.Exclude
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "guide", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Trip> trips = new ArrayList<>();
 

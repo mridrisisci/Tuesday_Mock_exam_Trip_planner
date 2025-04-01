@@ -1,6 +1,8 @@
 package app.entities;
 
 import app.dto.TripDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import app.enums.TripType;
@@ -13,6 +15,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "trip")
 @Builder
+@JsonIgnoreProperties
 public class Trip
 {
     @Id
@@ -24,11 +27,14 @@ public class Trip
     private Double latitude;
     private String name;
     private Integer price;
+
+    @Enumerated(EnumType.STRING)
     private TripType category;
 
     @ManyToOne
     @JoinColumn(name = "guide_id", nullable = false)
     @ToString.Exclude
+    @JsonBackReference
     private Guide guide;
 
     public Trip(Double latitude, Double Longitude)

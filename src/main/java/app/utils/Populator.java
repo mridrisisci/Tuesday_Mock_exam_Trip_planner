@@ -33,7 +33,7 @@ public class Populator
         guide1.setYearsOfExperience(5.0);
 
         // Trip for guide1
-        Trip trip1 = Trip.builder()
+        trip1 = Trip.builder()
             .startTime(LocalTime.of(8, 0))
             .endTime(LocalTime.of(10, 0))
             .longitude(50.0)
@@ -44,7 +44,7 @@ public class Populator
             .build();
 
         // Trip 2
-        Trip trip2 = Trip.builder()
+        trip2 = Trip.builder()
             .startTime(LocalTime.of(11, 0))
             .endTime(LocalTime.of(13, 0))
             .longitude(53.0)
@@ -55,7 +55,7 @@ public class Populator
             .build();
 
         // Trip 3
-        Trip trip3 = Trip.builder()
+        trip3 = Trip.builder()
             .startTime(LocalTime.of(16, 0))
             .endTime(LocalTime.of(18, 0))
             .longitude(54.0)
@@ -74,7 +74,7 @@ public class Populator
         guide2.setYearsOfExperience(8.0);
 
         // Trip 4
-        Trip trip4 = Trip.builder()
+        trip4 = Trip.builder()
             .startTime(LocalTime.of(7, 30))
             .endTime(LocalTime.of(10, 30))
             .longitude(55.0)
@@ -85,7 +85,7 @@ public class Populator
             .build();
 
         // Trip 5
-        Trip trip5 = Trip.builder()
+        trip5 = Trip.builder()
             .startTime(LocalTime.of(12, 30))
             .endTime(LocalTime.of(14, 30))
             .longitude(56.0)
@@ -96,7 +96,7 @@ public class Populator
             .build();
 
         // Trip 6
-        Trip trip6 = Trip.builder()
+        trip6 = Trip.builder()
             .startTime(LocalTime.of(19, 0))
             .endTime(LocalTime.of(21, 0))
             .longitude(57.0)

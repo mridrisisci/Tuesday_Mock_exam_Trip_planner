@@ -11,7 +11,6 @@ import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,6 @@ public class TripController implements IController
 
     public void populateDB(EntityManagerFactory emf)
     {
-        logger.info("Inside populateDB method");
         Populator populator = new Populator();
         try (EntityManager em = emf.createEntityManager())
         {
@@ -50,7 +48,7 @@ public class TripController implements IController
     {
         try
         {
-            ctx.json(dao.getAll(Guide.class));
+            ctx.json(dao.getAll(Trip.class));
         }
         catch (Exception ex)
         {
@@ -82,7 +80,24 @@ public class TripController implements IController
     @Override
     public void create(Context ctx)
     {
-
+        try
+        {
+            TripDTO incomingTest = ctx.bodyAsClass(TripDTO.class);
+            Trip entity = new Trip(incomingTest);
+            Trip createdEntity = dao.create(entity);
+            for (Trip trip : entity.getGuide().getTrips())
+            {
+               //trip.setGuide(createdEntity);
+                dao.update(trip);
+            }
+            ctx.json(new TripDTO(createdEntity));
+        }
+        catch (Exception ex)
+        {
+            logger.error("Error creating entity", ex);
+            ErrorMessage error = new ErrorMessage("Error creating entity");
+            ctx.status(404).json(error);
+        }
     }
 
     @Override
