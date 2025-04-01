@@ -32,9 +32,9 @@ class SecurityControllerTest {
 
     @BeforeAll
     static void setUpAll() {
-        HotelController hotelController = new HotelController(emf);
+        TripController guideController = new TripController(emf);
         SecurityController securityController = new SecurityController(emf);
-        Routes routes = new Routes(hotelController, securityController);
+        Routes routes = new Routes(guideController, securityController);
         ApplicationConfig
                 .getInstance()
                 .initiateServer()
@@ -51,7 +51,7 @@ class SecurityControllerTest {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
             // Clean up existing appa
-            em.createQuery("DELETE FROM UserAccount").executeUpappe();
+            em.createQuery("DELETE FROM UserAccount").executeUpdate();
 
 
             // Create test user with user role

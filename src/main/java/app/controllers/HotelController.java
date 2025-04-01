@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class HotelController implements IController
+public class HotelController
 {
     private final CrudDAO dao;
     private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
@@ -32,7 +32,6 @@ public class HotelController implements IController
 
 
 
-    @Override
     public void getAll(Context ctx)
     {
         try
@@ -47,7 +46,6 @@ public class HotelController implements IController
         }
     }
 
-    @Override
     public void getById(Context ctx)
     {
 
@@ -66,7 +64,6 @@ public class HotelController implements IController
         }
     }
 
-    @Override
     public void create(Context ctx)
     {
         try

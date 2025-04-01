@@ -1,9 +1,7 @@
 package app.controllers;
 
-import app.config.HibernateConfig;
 import app.dao.CrudDAO;
 import app.dao.GenericDAO;
-import app.dao.HotelDAO;
 import app.utils.Populator;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManager;
@@ -11,23 +9,24 @@ import jakarta.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class GuideController implements IController
+public class TripController implements IController
 {
     private final CrudDAO dao;
-    private static final Logger logger = LoggerFactory.getLogger(GuideController.class);
+    private static final Logger logger = LoggerFactory.getLogger(TripController.class);
 
-    public GuideController(EntityManagerFactory emf)
+    public TripController(EntityManagerFactory emf)
     {
         dao = new GenericDAO(emf);
     }
 
-    public GuideController(CrudDAO dao)
+    public TripController(CrudDAO dao)
     {
         this.dao = dao;
     }
 
     public void populateDB(EntityManagerFactory emf)
     {
+        logger.info("Inside populateDB method");
         Populator populator = new Populator();
         try (EntityManager em = emf.createEntityManager())
         {

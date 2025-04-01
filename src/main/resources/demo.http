@@ -1,23 +1,22 @@
 
+
 // POPULATE DB
-GET localhost:7070/api/populate
-
-GET localhost:7070/api/routes
+POST localhost:7070/api/populate
 
 ###
-GET localhost:7070/api/hotel
+GET localhost:7070/api/guide
 
 ###
-GET localhost:7070/api/hotel/3
+GET localhost:7070/api/guide/2
 
 ###
-POST localhost:7070/api/hotel
+POST localhost:7070/api/guide
 Content-Type: "application/json"
 
 {
-    "name": "Park Hotel",
-    "address": "Brorsonsvej 2",
-    "rooms":[
+    "name": "Captain America",
+    "address": "Brønshøj Torv",
+    "trips":[
         {
             "roomNumber": 101,
             "price": 1000
@@ -26,7 +25,7 @@ Content-Type: "application/json"
 }
 
 ###
-PUT localhost:7070/api/hotel/1
+PUT localhost:7070/api/guide/1
 Content-Type: "application/json"
 
 {
@@ -35,7 +34,7 @@ Content-Type: "application/json"
 }
 
 ###
-DELETE localhost:7070/api/hotel/1
+DELETE localhost:7070/api/guide/1
 
 ###
-GET localhost:7070/api/hotel/1/rooms
+GET localhost:7070/api/guide/1/trips
