@@ -2,6 +2,7 @@ package app;
 
 import app.config.ApplicationConfig;
 import app.config.HibernateConfig;
+import app.controllers.GuideController;
 import app.controllers.HotelController;
 import app.controllers.SecurityController;
 import app.routes.Routes;
@@ -20,25 +21,16 @@ public class Main
 
     public static void main(String[] args)
     {
-        //GuideController guideController = new GuideController(emf);
+        GuideController guideController = new GuideController(emf);
         SecurityController securityController = new SecurityController(emf);
-        //Routes routes = new Routes(guideController, securityController);
+        Routes routes = new Routes(guideController, securityController);
 
-        Populator populator = new Populator();
-        try (EntityManager em = emf.createEntityManager())
-        {
-            populator.resetAndPersistEntities(em);
-            logger.info("Populated database with dummy data");
-        } catch (Exception e)
-        {
-            logger.error("Error populating database: " + e.getMessage());
-        }
 
 
         ApplicationConfig
                 .getInstance()
                 .initiateServer()
-                //.setRoute(routes.getRoutes())
+                .setRoute(routes.getRoutes())
                 .handleException()
                 .setApiExceptionHandling()
                 .checkSecurityRoles()

@@ -1,3 +1,7 @@
+
+// POPULATE DB
+GET localhost:7070/api/populate
+
 GET localhost:7070/api/routes
 
 ###

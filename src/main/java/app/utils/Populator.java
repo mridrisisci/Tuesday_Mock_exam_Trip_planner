@@ -28,7 +28,6 @@ public class Populator
     public Populator()
     {
         // Dummy guide 1
-        Guide guide1 = new Guide();
         guide1.setFirstName("John");
         guide1.setLastName("Doe");
         guide1.setEmail("john.doe@example.com");
@@ -76,7 +75,6 @@ public class Populator
 
 
         // Dummy guide 2
-        Guide guide2 = new Guide();
         guide2.setFirstName("Jane");
         guide2.setLastName("Smith");
         guide2.setEmail("jane.smith@example.com");

@@ -1,43 +1,60 @@
 package app.routes;
 
+import app.config.HibernateConfig;
+import app.controllers.GuideController;
+import app.utils.Populator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import app.controllers.HotelController;
 import app.controllers.SecurityController;
 import app.enums.Roles;
 import io.javalin.apibuilder.EndpointGroup;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Routes
 {
-    private final HotelController hotelController;
+    private final GuideController guideController;
     private final SecurityController securityController;
     private final ObjectMapper jsonMapper = new ObjectMapper();
 
-    public Routes(HotelController hotelController, SecurityController securityController)
+    public Routes(GuideController guideController, SecurityController securityController)
     {
-        this.hotelController = hotelController;
+        this.guideController = guideController;
         this.securityController = securityController;
     }
 
     public  EndpointGroup getRoutes()
     {
         return () -> {
-            path("hotel", hotelRoutes());
             path("auth", authRoutes());
             path("protected", protectedRoutes());
+            path("guide", guideRoutes());
+            path("populate", populateDB(HibernateConfig.getEntityManagerFactory()));
         };
     }
 
-    private  EndpointGroup hotelRoutes()
+    private  EndpointGroup guideRoutes()
     {
         return () -> {
-            get(hotelController::getAll);
-            post(hotelController::create);
-            get("/{id}", hotelController::getById);
-            put("/{id}", hotelController::upappe);
-            delete("/{id}", hotelController::delete);
-            get("/{id}/rooms", hotelController::getRooms);
+            get("/all", guideController::getAll);
+            post("/create", guideController::create);
+            get("/{id}", guideController::getById);
+            put("/{id}", guideController::update);
+            delete("/{id}", guideController::delete);
+        };
+    }
+
+    private EndpointGroup populateDB(EntityManagerFactory emf)
+    {
+        return () -> {
+            get("/populate", ctx -> {
+                EntityManager em = emf.createEntityManager();
+                Populator populator = new Populator();
+                populator.resetAndPersistEntities(em);
+                ctx.json(jsonMapper.createObjectNode().put("msg", "Database populated with dummy data"));
+            });
         };
     }
 
