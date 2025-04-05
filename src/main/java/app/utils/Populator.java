@@ -154,6 +154,7 @@ public class Populator
         guide1.addTrip(trip1);
         guide1.addTrip(trip2);
         guide1.addTrip(trip3);
+
         guide2.addTrip(trip4);
         guide2.addTrip(trip5);
         guide2.addTrip(trip6);

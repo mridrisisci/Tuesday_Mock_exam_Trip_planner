@@ -5,6 +5,7 @@ import app.config.HibernateConfig;
 import app.controllers.TripController;
 import app.controllers.SecurityController;
 import app.routes.Routes;
+import app.utils.DataAPIReader;
 import jakarta.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ public class Main
 
     public static void main(String[] args)
     {
+        DataAPIReader dataAPIReader = new DataAPIReader();
         TripController tripController = new TripController(emf);
         SecurityController securityController = new SecurityController(emf);
         Routes routes = new Routes(tripController, securityController);

@@ -3,11 +3,15 @@ package app.controllers;
 import app.dao.CrudDAO;
 import app.dao.GenericDAO;
 import app.dto.ErrorMessage;
+import app.dto.NasaDTO;
 import app.dto.TripDTO;
-import app.entities.Guide;
 import app.entities.Trip;
 import app.utils.DataAPIReader;
 import app.utils.Populator;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManager;
@@ -15,34 +19,47 @@ import jakarta.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TripController implements IController
+import java.util.List;
+
+public class NasaController implements IController
 {
     private final CrudDAO dao;
-    private static final Logger logger = LoggerFactory.getLogger(TripController.class);
+    private final String BASE_URL = "https://api.nasa.gov/planetary/apod?api_key=";
+    private final String API_KEY = System.getenv("NASA_KEY");
+    private final DataAPIReader dataAPIReader;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final Logger logger = LoggerFactory.getLogger(NasaController.class);
 
-    public TripController(EntityManagerFactory emf  )
+    public NasaController(EntityManagerFactory emf, DataAPIReader dataAPIReader)
     {
         dao = new GenericDAO(emf);
+        this.dataAPIReader = dataAPIReader;
+        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
 
-    public TripController(CrudDAO dao )
+    public NasaController(CrudDAO dao, DataAPIReader dataAPIReader)
     {
         this.dao = dao;
+        this.dataAPIReader = dataAPIReader;
+        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
-    public void populateDB(EntityManagerFactory emf)
+    public void getNasaDTO(Context ctx)
     {
-        Populator populator = new Populator();
-        try (EntityManager em = emf.createEntityManager())
+        NasaDTO dto;
+        try
         {
-            populator.resetAndPersistEntities(em);
-            logger.info("Populated database with dummy data");
+            String json = dataAPIReader.getDataFromClient(BASE_URL + API_KEY);
+            JsonNode node = objectMapper.readValue(json, JsonNode.class);
+            dto = objectMapper.convertValue(node, new TypeReference<NasaDTO>() {});
+            ctx.json(dto);
         } catch (Exception e)
         {
-            logger.error("Error populating database: " + e.getMessage());
+            logger.error("Error getting NASA data", e);
+            ErrorMessage error = new ErrorMessage("Error getting NASA data");
+            ctx.status(404).json(error);
         }
-
     }
 
     @Override

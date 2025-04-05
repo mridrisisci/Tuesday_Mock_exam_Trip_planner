@@ -1,7 +1,9 @@
 package app.routes;
 
 import app.config.HibernateConfig;
+import app.controllers.NasaController;
 import app.controllers.TripController;
+import app.utils.DataAPIReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import app.controllers.SecurityController;
 import app.enums.Roles;
@@ -19,6 +21,8 @@ public class Routes
     private final ObjectMapper jsonMapper = new ObjectMapper();
     private final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
     private final Logger logger = LoggerFactory.getLogger(Routes.class);
+    private final DataAPIReader dataAPIReader = new DataAPIReader();
+    private final NasaController nasaController = new NasaController(emf, dataAPIReader);
 
     public Routes(TripController tripController, SecurityController securityController)
     {
@@ -32,8 +36,16 @@ public class Routes
             path("auth", authRoutes());
             path("protected", protectedRoutes());
             path("trips", tripRoutes());
+            path("/nasa", nasaRoutes());
         };
     }
+    private EndpointGroup nasaRoutes()
+    {
+        return () -> {
+            get("/", nasaController::getNasaDTO);
+        };
+    }
+
 
     private  EndpointGroup tripRoutes()
     {

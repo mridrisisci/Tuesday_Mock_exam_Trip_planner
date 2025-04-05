@@ -40,3 +40,6 @@ Content-Type: application/json
   "price": 150,
   "category": "BEACH"
 }
+
+###
+GET localhost:7070/api/nasa/
